@@ -72,7 +72,7 @@ export default function () {
         return schema.reminders.find(id).destroy();
       });
 
-      this.get("/api/lists", (schema, request) => {
+      this.get("/api/lists", (schema) => {
         return schema.lists.all();
       });
 
@@ -87,6 +87,15 @@ export default function () {
         let attrs = JSON.parse(request.requestBody);
 
         return schema.lists.create(attrs);
+      });
+
+      this.delete("/api/lists/:id", (schema, request) => {
+        let id = request.params.id;
+        let list = schema.lists.find(id);
+
+        list.reminders.destroy();
+
+        return list.destroy();
       });
     },
   });
