@@ -8,8 +8,9 @@ import {
   trait,
 } from "miragejs";
 
-export default function () {
-  createServer({
+export default function ({ environment = "development" } = {}) {
+  return createServer({
+    environment,
     serializers: {
       reminder: RestSerializer.extend({
         include: ["list"],
